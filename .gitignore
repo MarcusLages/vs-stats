@@ -137,3 +137,35 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Python stuff
+__pycache__/
+.venv/
+venv/
+.env/
+.env
+.env.*
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+*.egg-info/
+
+# OS and IDE files
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.user
+*.swp
+
+# Specific Plotly/Dash related files (if applicable)
+# Example: If your app generates a results.csv file you don't want to track
+# results.csv
