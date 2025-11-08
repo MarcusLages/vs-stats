@@ -3,6 +3,7 @@
   "displayName": "Statosaurus",
   "description": "VS Code extension for checking your coding stats. PS: Your data will not be stolen or given overseas.",
   "version": "0.0.1",
+  "type": "module",
   "engines": {
     "vscode": "^1.105.0"
   },
@@ -15,7 +16,16 @@
     "commands": [{
       "command": "statosaurus.helloWorld",
       "title": "Hello World"
-    }]
+    }],
+    "views": {
+      "explorer": [
+        {
+          "icon": "./resources/statosaurus.svg",
+          "id": "mainWindow",
+          "name": "Statosaurus"
+        }
+      ]
+    }
   },
   "scripts": {
     "lint": "eslint .",
