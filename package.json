@@ -1,0 +1,63 @@
+{
+  "name": "statosaurus",
+  "displayName": "Statosaurus",
+  "description": "VS Code extension for checking your coding stats. PS: Your data will not be stolen or given overseas.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "statosaurus.helloWorld",
+      "title": "Hello World"
+    }]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.105.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "eslint": "^9.36.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcusLages/vs-stats.git"
+  },
+  "keywords": [
+    "vscode",
+    "data-visualization",
+    "stats",
+    "extension",
+    "javascript",
+    "python"
+  ],
+  "author": "Marcus Lages and Ben Nguyen",
+  "contributors": [
+    {
+      "name": "Marcus Lages",
+      "email": "marcusvlages@gmail.com",
+      "url": "https://github.com/MarcusLages"
+    },
+    {
+      "name": "Ben Nguyen",
+      "email": "ben.nguyenxxii@gmail.com",
+      "url": "https://github.com/BenNg1"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcusLages/vs-stats/issues"
+  },
+  "homepage": "https://github.com/MarcusLages/vs-stats#readme"
+}
