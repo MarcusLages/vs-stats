@@ -1,7 +1,9 @@
 ## GitHub API
 - https://api.github.com
 - We might have to use webhooks
-- `octokit` node module to keep track of thatw
+- `octokit` node module to keep track of that
+- To run just press `F5`/`Ctrl+F5` for debug/production
+- Don't forget to change "activation" and "contributes" in `package.json
 
 ## Headers
 - `Accept`: `application/vnd.github+json` or `application/json`
