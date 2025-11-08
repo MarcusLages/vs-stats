@@ -9,7 +9,7 @@ export class MainWindow {
     }
 
     // getChildren(element?: WindowItem): Thenable<WindowItem[]>
-    getChildren(elem) {
+    getChildren(_) {
         return Promise.resolve([
             new WindowItem("Title", vscode.TreeItemCollapsibleState.None)
         ])
