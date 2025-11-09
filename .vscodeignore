@@ -8,3 +8,25 @@ vsc-extension-quickstart.md
 **/*.map
 **/eslint.config.mjs
 **/.vscode-test.*
+
+# Ignore virtual environments and caches
+.venv/**
+__pycache__/**
+.cache/**
+.lsp/**
+.vscode/**
+.git/**
+.gitignore
+
+# Ignore big Python-related folders
+lib/**
+share/**
+Scripts/**
+requirements.txt
+NOTES.md
+*.pyc
+
+# Ignore anything not needed for VSCode extension
+tests/**
+tsconfig.json
+package-lock.json
