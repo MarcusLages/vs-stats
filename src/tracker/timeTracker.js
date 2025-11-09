@@ -127,7 +127,7 @@ export class TimeTracker extends Tracker {
             weekProject: TimeTracker.formatTime(this.getProjectWeekTime())
         };
 
-        console.log('Time:', times);
+        // console.log('Time:', times);
         return times;
     }
 }

@@ -19,13 +19,18 @@ export function activate(context) {
     commitTracker.start();
     timeTracker.start();
 
-	const clockWindow = vscode.window.registerTreeDataProvider(
+    const clockWindow = new ClockWindow();
+
+	const clockWindowTD = vscode.window.registerTreeDataProvider(
 		'clocksWindow',
-		new ClockWindow()
+		clockWindow
 	)
 
+    timeTracker.onUpdate(
+        clocks => clockWindow.refresh(clocks)
+    )
 
-	context.subscriptions.push(clockWindow);
+	context.subscriptions.push(clockWindowTD);
 }
 
 // This method is called when your extension is deactivated
