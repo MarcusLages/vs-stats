@@ -1,65 +1,141 @@
-# Statosaurus
+# Statosaurus 🦖
 
-This is the README for your extension "Statosaurus". After writing up a brief description, we recommend including the following sections.
+A Visual Studio Code extension that tracks your coding activity — commits, lines added/removed, and repository insights — all visualized inside VS Code. Our objective is to help users stay focused on their coding/assignments through easily observable progression and stats.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Live Git Commit Tracking** - Monitor your commits in real-time
+- **Line Statistics** - Track lines added and removed per session
+- **Plotly Visualizations** - Interactive charts and heatmaps for commit activity
+- **Time Tracking** - See how much time you've spent on a repository (session, weekly, total)
+- **Visual Dashboard** - Integrated sidebar with multiple views (Clocks, Commits, Changes)
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+### From Marketplace (Coming Soon)
+1. Open VS Code
+2. Go to Extensions (`Ctrl+Shift+X` or `Cmd+Shift+X`)
+3. Search for "Statosaurus"
+4. Click Install
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Manual Installation (Development)
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/MarcusLages/vs-stats.git
+   cd vs-stats
+   ```
+
+2. Install Node.js dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Install Python dependencies (for visualization scripts):
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1  # Windows PowerShell
+   # or: source .venv/bin/activate  # macOS/Linux
+   pip install -r requirements.txt
+   ```
+
+4. Press `F5` in VS Code to launch the extension in debug mode
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### System Requirements
+- **VS Code**
+- **Node.js**
+- **Python**
+- **Git**
+
+### Dependencies
+
+**Node.js (Extension):**
+- `vscode.git` extension (built-in)
+
+**Python (Visualization):**
+- `plotly` (6.4.0) - Interactive charts
+- `pandas` (2.3.3) - Data manipulation
+- `numpy` (2.3.4) - Numerical operations
+
+See `package.json` and `requirements.txt` for complete dependency lists.
+
+## Usage
+
+1. **Open a Git repository** in VS Code
+2. **Access Statosaurus** from the Activity Bar (sidebar icon)
+3. **View your stats** in three panels:
+   - **Clocks**: Session, weekly, and total time tracking
+   - **Commits**: Commit heatmap for the last 7 days
+   - **Changes**: Lines added/removed graphs
+
+### Python Visualization Scripts
+
+The extension includes standalone Python scripts for generating visualizations:
+
+**Line Graph (Lines Added/Removed):**
+```bash
+# From file
+python src/visualization/lineGraphs.py data.json
+
+# From stdin
+echo '{"linesAdded":[10,7,12,15,8,20,5],"linesDeleted":[2,3,1,4,0,5,2]}' | python src/visualization/lineGraphs.py
+```
+
+**Commit Heatmap:**
+```bash
+# From file
+python src/visualization/commitMap.py commitdata.json
+
+# From stdin
+echo '{"commits":[5,10,3,8,12,6,15]}' | python src/visualization/commitMap.py
+```
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This extension does not currently add any configurable settings.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Initial time tracking may not start immediately on first activation
+- Large repositories may experience slight delays in commit tracking
+- Python visualizations require manual execution (not yet integrated into extension UI)
 
-## Release Notes
+Report issues at: [GitHub Issues](https://github.com/MarcusLages/vs-stats/issues)
 
-Users appreciate release notes as you update your extension.
+## Project Structure
 
-### 1.0.0
+```
+vs-stats/
+├── src/
+│   ├── extension.js          # Extension entry point
+│   ├── components/           # UI components
+│   ├── tracker/              # Tracking logic (commits, lines, time)
+│   └── visualization/        # Python plotting scripts
+│       ├── lineGraphs.py     # Lines added/removed graphs
+│       └── commitMap.py      # Commit heatmap
+├── resources/                # Icons and assets
+├── package.json              # Extension manifest
+└── requirements.txt          # Python dependencies
+```
 
-Initial release of ...
+## Contributing
 
-### 1.0.1
+Contributions are welcome, feel free to make a pull request
 
-Fixed issue #.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### 1.1.0
+## Authors
 
-Added features X, Y, and Z.
+- **Marcus Lages** - [MarcusLages](https://github.com/MarcusLages)
+- **Ben Nguyen** - [BenNg1](https://github.com/BenNg1)
 
----
+## Acknowledgments
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- Built with [Plotly](https://plotly.com/) for visualizations
+- Powered by VS Code Extension API
+- Icons by [Statosaurus gang]
