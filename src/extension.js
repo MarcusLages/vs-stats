@@ -4,7 +4,8 @@ import { LineTracker } from "./tracker/lineTracker.js"
 import { CommitTracker } from "./tracker/commitTracker.js";
 import { TimeTracker } from "./tracker/timeTracker.js";
 import { CommitWindow } from "./components/commit_window.js";
-import { processCommitsHTMLString } from "./visualization/dataView.js";
+import { LineWindow } from "./components/line_window.js";
+import { processCommitsHTMLString, processLinesHTMLString } from "./visualization/dataView.js";
 
 // activate(context: vscode.ExtensionContext)
 export function activate(context) {
@@ -23,31 +24,44 @@ export function activate(context) {
     timeTracker.start();
 
     const clockWindow = new ClockWindow();
-    let heatCommitWindow = new CommitWindow();
+    const heatCommitWindow = new CommitWindow();
+    const lineStatsWindow = new LineWindow();
 
 	const clockWindowDisp = vscode.window.registerTreeDataProvider(
 		'clocksWindow',
 		clockWindow
-	)
+	);
     const heatCommitWindowDisp = vscode.window.registerWebviewViewProvider(
         'heatCommitWindow',
         heatCommitWindow
-    )
+    );
+    const lineStatsWindowDisp = vscode.window.registerWebviewViewProvider(
+        'lineStatsWindow',
+        lineStatsWindow
+    );
 
-    timeTracker.onUpdate( clocks => {
-        clockWindow.refresh(clocks)
-    })
+    // Time tracker updates
+    timeTracker.onUpdate(clocks => {
+        clockWindow.refresh(clocks);
+    });
+
+    // Commit tracker updates - produce full HTML and set it into the webview
     commitTracker.onUpdate(async commits => {
-        
         if (!heatCommitWindow.webview) return;
-        const resHTML = processCommitsHTMLString(commits);
-        // const resHTML = "<h1>Hello hello</h1>"
-        // console.log(resHTML) 
-        heatCommitWindow.refresh(resHTML);
-    })
+        const html = processCommitsHTMLString(commits);
+        heatCommitWindow.refresh(html);
+    });
 
-	context.subscriptions.push(heatCommitWindowDisp);
+    // Line tracker updates - produce full HTML and set it into the webview
+    lineTracker.onUpdate(async lines => {
+        if (!lineStatsWindow.webview) return;
+        const html = processLinesHTMLString(lines);
+        lineStatsWindow.refresh(html);
+    });
+
 	context.subscriptions.push(clockWindowDisp);
+	context.subscriptions.push(heatCommitWindowDisp);
+	context.subscriptions.push(lineStatsWindowDisp);
 }
 
 // This method is called when your extension is deactivated

@@ -12,12 +12,14 @@ export class ClockWindow {
     constructor() {
         this._onDidChangeTreeData = new vscode.EventEmitter();
         this.onDidChangeTreeData = this._onDidChangeTreeData.event;
+
+        // prettier labels + emojis
         this.items = [
-            new WindowItem("Hours in this session", "0", vscode.TreeItemCollapsibleState.None),
-            new WindowItem("Hours weekly", "0", vscode.TreeItemCollapsibleState.None),
-            new WindowItem("Hours in this project", "0", vscode.TreeItemCollapsibleState.None),
-            new WindowItem("Hours in this project (this week)", "0", vscode.TreeItemCollapsibleState.None)
-        ]
+            new WindowItem("Session", "0", vscode.TreeItemCollapsibleState.None),
+            new WindowItem("Weekly", "0", vscode.TreeItemCollapsibleState.None),
+            new WindowItem("Project Total", "0", vscode.TreeItemCollapsibleState.None),
+            new WindowItem("Project (this week)", "0", vscode.TreeItemCollapsibleState.None)
+        ];
     }
 
     // getTreeItem(element: WindowItem): vscode.TreeItem
@@ -32,8 +34,11 @@ export class ClockWindow {
 
     setClocks(data) {
         this.items[ClockWindow.SESS_IDX].description = data.session;
+
         this.items[ClockWindow.WEEKLY_IDX].description = data.weekly;
+
         this.items[ClockWindow.TOTAL_IDX].description = data.total;
+
         this.items[ClockWindow.WEEKLY_PROJ_IDX].description = data.weekProject;
     }
 

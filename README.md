@@ -55,8 +55,8 @@ A Visual Studio Code extension that tracks your coding activity — commits, lin
 
 **Python (Visualization):**
 - `plotly` (6.4.0) - Interactive charts
-- `pandas` (2.3.3) - Data manipulation
-- `numpy` (2.3.4) - Numerical operations
+- `vscode`
+- `vscode.git`
 
 See `package.json` and `requirements.txt` for complete dependency lists.
 
@@ -69,7 +69,7 @@ See `package.json` and `requirements.txt` for complete dependency lists.
    - **Commits**: Commit heatmap for the last 7 days
    - **Changes**: Lines added/removed graphs
 
-### Python Visualization Scripts
+### Python Visualization Scripts (DOESNT WORK, USED JS IN THE MOMENT)
 
 The extension includes standalone Python scripts for generating visualizations:
 
@@ -110,10 +110,9 @@ vs-stats/
 ├── src/
 │   ├── extension.js          # Extension entry point
 │   ├── components/           # UI components
+│   ├── utils/                # Util functions
 │   ├── tracker/              # Tracking logic (commits, lines, time)
 │   └── visualization/        # Python plotting scripts
-│       ├── lineGraphs.py     # Lines added/removed graphs
-│       └── commitMap.py      # Commit heatmap
 ├── resources/                # Icons and assets
 ├── package.json              # Extension manifest
 └── requirements.txt          # Python dependencies

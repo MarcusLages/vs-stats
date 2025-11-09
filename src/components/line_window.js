@@ -1,4 +1,4 @@
-export class CommitWindow {
+export class LineWindow {
 
     constructor() {
         this.webview = null;
@@ -9,25 +9,24 @@ export class CommitWindow {
         webviewView.webview.options = { enableScripts: true };
         // initial placeholder; actual HTML will be set by extension.refresh(html)
         webviewView.webview.html = this.getHtmlPlaceholder();
-        console.log("CommitWindow webviewView", webviewView)
+        console.log("LineWindow webviewView", webviewView)
     }
 
-    refresh(snippet) {
+    refresh(data) {
         if (!this.webview) return;
         try {
             // Accept full HTML string produced by the extension
-            this.webview.webview.html = snippet || this.getHtmlPlaceholder();
+            this.webview.webview.html = data || this.getHtmlPlaceholder();
         } catch (e) {
-            console.error('Failed to set commit webview HTML', e);
+            console.error('Failed to set line webview HTML', e);
         }
     }
-
     getHtmlPlaceholder() {
         return `<!DOCTYPE html>
             <html>
             <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
-            <body><div>Loading commits…</div></body>
+            <body><div>Loading changes…</div></body>
             </html>`;
     }
 }
