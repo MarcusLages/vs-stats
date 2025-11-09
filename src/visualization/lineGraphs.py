@@ -1,17 +1,13 @@
 import json
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+import sys
 
 def load_and_format_data(json_file='data.json'):
-    """
-    Loads data from JSON and returns dictionaries for both lines added and removed.
-    Returns: (lines_added_dict, lines_removed_dict)
-    """
+
     with open(json_file, 'r') as file:
         data = json.load(file)
     
-    # Get current date from JSON
-    curr_date = datetime.strptime(data["currDate"], "%Y-%m-%d").date()
     lines_added_array = data["linesAdded"]
     lines_deleted_array = data["linesDeleted"]
     
@@ -89,7 +85,14 @@ def plot_lines_metrics(added_dict, deleted_dict):
     return fig
 
 if __name__ == '__main__':
-    added_data, deleted_data = load_and_format_data('data.json')
+
+    if len(sys.argv) > 1:
+        json_file = sys.argv[1]
+    else:
+        json_file = 'data.json'  # Default file
+    
+    print(f"Loading data from: {json_file}")
+    added_data, deleted_data = load_and_format_data(json_file)
     fig = plot_lines_metrics(added_data, deleted_data)
     fig.show()
     
