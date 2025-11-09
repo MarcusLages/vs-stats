@@ -25,7 +25,6 @@ export class LineWindow {
         return `<!DOCTYPE html>
             <html>
             <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>body{font-family:sans-serif;padding:12px;margin:0;color:#666}</style>
             </head>
             <body><div>Loading changes…</div></body>
             </html>`;
