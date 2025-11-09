@@ -1,7 +1,9 @@
 import { getCurRepo } from "../utils/git.js";
 import * as vscode from "vscode";
+import { Tracker } from "./tracker.js";
 
-export class CommitTracker {
+export class CommitTracker extends Tracker {
+
     start() {
         getCurRepo().then(async repo => {
             if (!repo) {
@@ -41,6 +43,8 @@ export class CommitTracker {
 
                     console.log(`Commits made today: ${todayCommits.length}`);
                     console.log('Today started at:', today);
+                    
+                    this._onUpdate.fire({"todayCommits": todayCommits})
                     // return todayCommits.length;
                     // prevOnCommit(ev);
                 } catch (error) {

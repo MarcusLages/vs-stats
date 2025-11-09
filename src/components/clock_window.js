@@ -2,8 +2,6 @@ import * as vscode from "vscode";
 
 // export class MainWindow implements vscode.TreeDataProvider<WindowItem>
 export class ClockWindow {
-    constructor() {
-    }
 
     // getTreeItem(element: WindowItem): vscode.TreeItem
     getTreeItem(elem) {

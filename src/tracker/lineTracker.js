@@ -1,18 +1,18 @@
 import * as vscode from "vscode";
 import { getCurRepo } from "../utils/git.js";
 import path from "path";
+import { Tracker } from "./tracker.js";
 
-export class LineTracker {
+export class LineTracker extends Tracker {
 
     static ADDED_LINE_REGEX = /^\+(?!\+\+)/gm;
     static REMOVED_LINE_REGEX = /^\-(?!\-)/gm;
-
-    start(component) {
+    
+    start() {
         vscode.workspace.onDidSaveTextDocument(async () => {
             const repo = await getCurRepo();
             if (!repo || repo.state.workingTreeChanges.length === 0) return;
 
-            // TODO for staged ones
             const unstaged_changes = repo.state.workingTreeChanges;
             const staged_changes = repo.state.indexChanges;
             const res = { "added": 0, "removed": 0 };
@@ -47,7 +47,7 @@ export class LineTracker {
                     console.error(`Diff failed - ${relPath}: `, err);
                 }
             }
-            component.update(res)
+            this._onUpdate.fire(res)
         });
     }
 
