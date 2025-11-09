@@ -1,9 +1,7 @@
 import { Tracker } from "./tracker.js";
 
 /**
- * data: {
- *      
- * }
+ * ALERT! : If you open two workspaces, then the time increments twice.
  */
 export class TimeTracker extends Tracker {
     constructor(context) {

@@ -10,7 +10,7 @@ export function activate(context) {
 	console.log('Extension "statosaurus" activated.');
 
     // Start tracking
-    const lineTracker = new LineTracker();
+    const lineTracker = new LineTracker(context);
     const commitTracker = new CommitTracker();
     const timeTracker = new TimeTracker(context);
     
