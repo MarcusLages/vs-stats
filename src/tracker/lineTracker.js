@@ -5,7 +5,7 @@ import { Tracker } from "./tracker.js";
 
 export class LineTracker extends Tracker {
 
-    static DAYS_IN_WEEK = 0;
+    static DAYS_IN_WEEK = 7;
     static WEEK_AGO = 0;
     static TODAY = 6;
 
@@ -82,13 +82,17 @@ export class LineTracker extends Tracker {
     }
 
     loadLinesAdded() {
-        const stored = this.context.workspaceState.get(LineTracker.LINES_ADDED_STG_KEY);
-        return stored || Array(LineTracker.DAYS_IN_WEEK + 1).fill(0);
+        return this.context.workspaceState.get(
+            LineTracker.LINES_ADDED_STG_KEY,
+            Array(LineTracker.DAYS_IN_WEEK).fill(0)
+        );
     }
-
+    
     loadLinesRemoved() {
-        const stored = this.context.workspaceState.get(LineTracker.LINES_REMOVED_STG_KEY);
-        return stored || Array(LineTracker.DAYS_IN_WEEK + 1).fill(0);
+        return this.context.workspaceState.get(
+            LineTracker.LINES_REMOVED_STG_KEY,
+            Array(LineTracker.DAYS_IN_WEEK).fill(0)
+        );
     }
 
     loadCurrDate() {
@@ -131,11 +135,11 @@ export class LineTracker extends Tracker {
 
         this.context.workspaceState.update(
             LineTracker.LINES_ADDED_STG_KEY,
-            this.linesAdded[LineTracker.TODAY]
+            this.linesAdded
         )
         this.context.workspaceState.update(
             LineTracker.LINES_REMOVED_STG_KEY,
-            this.linesRemoved[LineTracker.TODAY]
+            this.linesRemoved
         )
     }
 
