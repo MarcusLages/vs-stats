@@ -2,24 +2,35 @@ import * as vscode from "vscode";
 import { getCurRepo } from "./utils/git.js";
 import { ClockWindow } from "./components/clock_window.js";
 import { LineTracker } from "./tracker/lineTracker.js"
-import { CommitTracker } from "./tracker/getCommits.js";
+import { CommitTracker } from "./tracker/commitTracker.js";
 import { TimeTracker } from "./tracker/timeTracker.js";
 
 // activate(context: vscode.ExtensionContext)
 export function activate(context) {
 	console.log('Extension "statosaurus" activated.');
-    // Start tracking
-    new LineTracker().start({update: function(m) { console.log(`+${m.added} -${m.removed}`) }});
-    new CommitTracker().start();
-    new TimeTracker(context).start();
 
-	const clockWindow = vscode.window.registerTreeDataProvider(
+    // Start tracking
+    const lineTracker = new LineTracker(context);
+    const commitTracker = new CommitTracker(context);
+    const timeTracker = new TimeTracker(context);
+    
+    // lineTracker.start({update: function(m) { console.log(`+${m.added} -${m.removed}`) }});
+    lineTracker.start();
+    commitTracker.start();
+    timeTracker.start();
+
+    const clockWindow = new ClockWindow();
+
+	const clockWindowTD = vscode.window.registerTreeDataProvider(
 		'clocksWindow',
-		new ClockWindow()
+		clockWindow
 	)
 
+    timeTracker.onUpdate(
+        clocks => clockWindow.refresh(clocks)
+    )
 
-	context.subscriptions.push(clockWindow);
+	context.subscriptions.push(clockWindowTD);
 }
 
 // This method is called when your extension is deactivated

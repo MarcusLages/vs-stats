@@ -1,5 +1,11 @@
-export class TimeTracker {
+import { Tracker } from "./tracker.js";
+
+/**
+ * ALERT! : If you open two workspaces, then the time increments twice.
+ */
+export class TimeTracker extends Tracker {
     constructor(context) {
+        super();
         this.context = context;
         this.sessionStartTime = new Date();
         this.projectStartTime = this.loadProjectStartTime();
@@ -17,12 +23,20 @@ export class TimeTracker {
         // Update times second for testting
         this.updateInterval = setInterval(() => {
             this.updateTimes();
+            this._onUpdate.fire(this.emitTimes())
         }, 1000);
 
         // Initial update
         this.updateTimes();
     }
 
+    static formatTime(ms) {
+        const seconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        
+        return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
+    }
 
     updateTimes() {
         const now = new Date();
@@ -43,7 +57,6 @@ export class TimeTracker {
         this.lastUpdateTime = now;
         
         this.saveTimes();
-        this.emitTimes();
     }
 
     getSessionTime() {
@@ -105,22 +118,14 @@ export class TimeTracker {
     }
 
     emitTimes() {
-        // Format time
-        const formatTime = (ms) => {
-            const seconds = Math.floor(ms / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const hours = Math.floor(minutes / 60);
-            
-            return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
-        };
-
         const times = {
-            session: formatTime(this.getSessionTime()),
-            weekly: formatTime(this.getWeeklyTime()),
-            total: formatTime(this.getTotalProjectTime()),
-            weekProject: formatTime(this.getProjectWeekTime())
+            session: TimeTracker.formatTime(this.getSessionTime()),
+            weekly: TimeTracker.formatTime(this.getWeeklyTime()),
+            total: TimeTracker.formatTime(this.getTotalProjectTime()),
+            weekProject: TimeTracker.formatTime(this.getProjectWeekTime())
         };
 
-        console.log('Time:', times);
+        // console.log('Time:', times);
+        return times;
     }
 }
