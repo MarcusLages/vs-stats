@@ -2,6 +2,11 @@ import * as vscode from "vscode";
 
 // export class MainWindow implements vscode.TreeDataProvider<WindowItem>
 export class MainWindow {
+    constructor() {
+        this.hourItem = undefined;
+        this.heatCommit = undefined;
+        this.lineStats = undefined;
+    }
 
     // getTreeItem(element: WindowItem): vscode.TreeItem
     getTreeItem(elem) {
@@ -20,5 +25,9 @@ export class WindowItem extends vscode.TreeItem {
     constructor(label, collapsibleState) {
         super(label, collapsibleState);
         // can include tooltip, description, iconPath
+    }
+
+    update(data) {
+
     }
 }
