@@ -5,7 +5,16 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+sdfsd
+sdasdsd
+sdfsdsfsd
+sdf
+sdfsdsdf
+sdfsdfsdfs
 
+
+sfd
+sdasd
 # Diagnostic reports (https://nodejs.org/api/report.html)
 
 # Runtime data
@@ -117,9 +126,16 @@ dist
 
 # Firebase cache directory
 .firebase/
+sdfsdfsdfs
 
-# TernJS port file
+sdf
+# TernJS port fileSsdf
 .tern-port
+
+sd
+sd
+
+
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
@@ -127,12 +143,5 @@ dist
 # yarn v3
 .pnp.*
 .yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
 !.yarn/versions
 
-# Vite logs files
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
