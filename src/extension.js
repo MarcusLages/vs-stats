@@ -11,7 +11,7 @@ export function activate(context) {
 
     // Start tracking
     const lineTracker = new LineTracker(context);
-    const commitTracker = new CommitTracker();
+    const commitTracker = new CommitTracker(context);
     const timeTracker = new TimeTracker(context);
     
     // lineTracker.start({update: function(m) { console.log(`+${m.added} -${m.removed}`) }});
