@@ -1,6 +1,6 @@
 # Statosaurus 🦖
 
-A Visual Studio Code extension that tracks your coding activity — commits, lines added/removed, and repository insights — all visualized inside VS Code. Our objective is to help users stay focused on their coding/assignments through easily observable progression and stats.
+A Visual Studio Code extension that tracks your coding activity — commits, lines added/removed, and repository insights — all visualized inside VS Code. Our objective is to help users stay focused on their coding/assignments through easily observable progression and stats; all without leaving your editor.
 
 ## Features
 
