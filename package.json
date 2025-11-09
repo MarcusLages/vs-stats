@@ -2,6 +2,7 @@
   "name": "statosaurus",
   "displayName": "Statosaurus",
   "publisher": "Statosaurus",
+  "icon": "images/statosaurus.png",
   "description": "VS Code extension for checking your coding stats. PS: Your data will not be stolen or given overseas.",
   "version": "0.0.1",
   "type": "module",
