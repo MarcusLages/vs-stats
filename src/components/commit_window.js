@@ -12,6 +12,7 @@ export class CommitWindow {
     }
 
     refresh(snippet) {
+        console.log(snippet)
         this.webview.webview.html = this.getHtml(snippet);
     }
 

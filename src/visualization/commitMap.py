@@ -1,15 +1,10 @@
 import json
 import plotly.graph_objects as go
+import plotly.io as pio
 from datetime import datetime, timedelta
 import sys
 
 def load_and_format_data(json_input=None):
-    """
-    Load data from file path, JSON string, or stdin.
-    
-    Args:
-        json_input: File path, JSON string, or None for stdin
-    """
     if json_input is None:
         # Read from stdin
         data = json.load(sys.stdin)
@@ -94,4 +89,4 @@ if __name__ == '__main__':
         commits_data = load_and_format_data()
     
     fig = plot_commit_heatmap(commits_data)
-    fig.show()
+    print(pio.to_html(fig))

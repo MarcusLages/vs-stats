@@ -1,10 +1,11 @@
 import { spawn } from "child_process";
 import path from "path";
 
-export function runPy(scriptPath, input = "", args = []) {
+export function runPy(context, scriptPath, input = "", args = []) {
     return new Promise((res, rej) => {
+        // console.log("venv", getVenvPython(context))
         const pyProc = spawn(
-            getVenvPython(), 
+            getVenvPython(context), 
             [scriptPath].concat(args),
             {
                 // stdin, stdout, stderr
@@ -32,9 +33,10 @@ export function runPy(scriptPath, input = "", args = []) {
     })
 }
 
-function getVenvPython() {
+function getVenvPython(context) {
     // unix vs windows loation of venv python interpreter
-    const base = path.join(process.cwd(), ".venv");
+    console.log(context)
+    const base = path.join(context.extensionPath, ".venv");
     const unix = path.join(base, "bin", "python");
     const win = path.join(base, "Scripts", "python.exe");
     return process.platform === "win32" ? win : unix;

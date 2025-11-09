@@ -4,12 +4,14 @@ import { LineTracker } from "./tracker/lineTracker.js"
 import { CommitTracker } from "./tracker/commitTracker.js";
 import { TimeTracker } from "./tracker/timeTracker.js";
 import { CommitWindow } from "./components/commit_window.js";
-import { runPy } from "./utils/pipe.js";
+import { processCommitsHTMLString } from "./visualization/dataView.js";
 
 // activate(context: vscode.ExtensionContext)
 export function activate(context) {
 	console.log('Extension "statosaurus" activated.');
 
+    // const daemon = new PythonDaemon(context, "./visualization/daemon.py");
+    
     // Start tracking
     const lineTracker = new LineTracker(context);
     const commitTracker = new CommitTracker(context);
@@ -30,7 +32,6 @@ export function activate(context) {
     const heatCommitWindowDisp = vscode.window.registerWebviewViewProvider(
         'heatCommitWindow',
         heatCommitWindow
-
     )
 
     timeTracker.onUpdate( clocks => {
@@ -39,9 +40,9 @@ export function activate(context) {
     commitTracker.onUpdate(async commits => {
         
         if (!heatCommitWindow.webview) return;
-        // const resHTML = await runPy("./visualization/commitMap.py", JSON.stringify(commits));
-        const resHTML = "<h1>Hello hello</h1>"
-        console.log(resHTML)
+        const resHTML = processCommitsHTMLString(commits);
+        // const resHTML = "<h1>Hello hello</h1>"
+        // console.log(resHTML) 
         heatCommitWindow.refresh(resHTML);
     })
 
