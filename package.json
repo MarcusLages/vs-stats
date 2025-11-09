@@ -1,7 +1,7 @@
 {
   "name": "statosaurus",
   "displayName": "Statosaurus",
-  "publisher.name": "Statosaurus",
+  "publisher": "Statosaurus",
   "description": "VS Code extension for checking your coding stats. PS: Your data will not be stolen or given overseas.",
   "version": "0.0.1",
   "type": "module",
