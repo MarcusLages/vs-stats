@@ -29,7 +29,11 @@ export class LineTracker extends Tracker {
     start() {
         vscode.workspace.onDidSaveTextDocument(async () => {
             const repo = await getCurRepo();
-            if (!repo || repo.state.workingTreeChanges.length === 0) return;
+            if (!repo || (repo.state.workingTreeChanges.length === 0 && repo.state.indexChanges.length === 0)) {
+                // Still emit current data even if no changes
+                this._onUpdate.fire(this.getData());
+                return;
+            }
 
             const unstaged_changes = repo.state.workingTreeChanges;
             const staged_changes = repo.state.indexChanges;
@@ -67,9 +71,12 @@ export class LineTracker extends Tracker {
 
             this.updateDate();
             this.updateTodayLine(addedToday, removedToday);
-            console.log(this.getData())
+            console.log("LineTracker data:", this.getData());
             this._onUpdate.fire(this.getData());
         });
+
+        // Fire initial data
+        this._onUpdate.fire(this.getData());
     }
 
     diffParse(diff) {

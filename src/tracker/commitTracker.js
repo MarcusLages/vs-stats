@@ -21,55 +21,55 @@ export class CommitTracker extends Tracker {
         this.updateDate();
     }
 
-    start() {
-        getCurRepo().then(async repo => {
+    async start() {
+        const repo = await getCurRepo();
+        if (!repo) {
+            console.log("No Git repository found.");
+            return;
+        }
+
+        // Initial commit count
+        await this.updateCommitCount();
+
+        vscode.workspace.onDidSaveTextDocument(async () => {
+            await this.updateCommitCount();
+        });
+
+        // Fire initial data
+        this._onUpdate.fire(this.getData());
+    }
+
+    async updateCommitCount() {
+        try {
+            const repo = await getCurRepo();
             if (!repo) {
                 console.log("No Git repository found.");
-                return 0;
+                return;
             }
 
-            // console.log(repo)
-            // console.log(repo)
-            // console.log(repo.onDidCommit)
-            // const prevOnCommit = repo.onDidCommit;
+            // Create a Date object for today at 00:00 (midnight)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
 
-            // repo.onDidChangeStatus;
-            // repo.onDidChangeHead;
-            vscode.workspace.onDidSaveTextDocument(async ev => {
-                try {
-                    const repo = await getCurRepo();
-                    if (!repo) {
-                        console.log("No Git repository found.");
-                        return 0;
-                    }
+            // Get all recent commits
+            const commits = await repo.log({
+                maxEntries: 500
+            });
 
-                    // Create a Date object for today at 00:00 (midnight)
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
+            // Filter commits from today (since midnight)
+            const todayCommits = commits.filter(commit => {
+                const commitDate = new Date(commit.authorDate);
+                return commitDate >= today;
+            });
 
-                    // Get all recent commits
-                    const commits = await repo.log({
-                        maxEntries: 500
-                    });
-
-                    // Filter commits from today (since midnight)
-                    const todayCommits = commits.filter(commit => {
-                        const commitDate = new Date(commit.authorDate);
-                        return commitDate >= today;
-                    });
-
-                    this.updateDate();
-                    this.updateCommits(todayCommits.length);
-                    // console.log(`Commits made today: ${this.commits}`);
-                    console.log(this.getData());
-                    
-                    this._onUpdate.fire(this.getData())
-                } catch (error) {
-                    console.error("Failed to retrieve commits:", error);
-                    return 0;
-                }
-            })
-        });
+            this.updateDate();
+            this.updateCommits(todayCommits.length);
+            console.log("CommitTracker data:", this.getData());
+            
+            this._onUpdate.fire(this.getData());
+        } catch (error) {
+            console.error("Failed to retrieve commits:", error);
+        }
     }
 
     loadCommits() {
