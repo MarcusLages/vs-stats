@@ -1,13 +1,7 @@
 # Logs
-
-sdfsdfsd
 logs
-
-
 *.log
-
 npm-debug.log*
-sdfsd
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
