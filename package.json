@@ -29,11 +29,13 @@
         },
         {
           "icon": "./resources/statosaurus.svg",
+          "type": "webview",
           "id": "heatCommitWindow",
           "name": "Commits"
         },
         {
           "icon": "./resources/statosaurus.svg",
+          "type": "webview",
           "id": "lineStatsWindow",
           "name": "Changes"
         }

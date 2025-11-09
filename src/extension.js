@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import { getCurRepo } from "./utils/git.js";
 import { ClockWindow } from "./components/clock_window.js";
 import { LineTracker } from "./tracker/lineTracker.js"
 import { CommitTracker } from "./tracker/commitTracker.js";
 import { TimeTracker } from "./tracker/timeTracker.js";
+import { CommitWindow } from "./components/commit_window.js";
+import { runPy } from "./utils/pipe.js";
 
 // activate(context: vscode.ExtensionContext)
 export function activate(context) {
@@ -20,17 +21,32 @@ export function activate(context) {
     timeTracker.start();
 
     const clockWindow = new ClockWindow();
+    let heatCommitWindow = new CommitWindow();
 
-	const clockWindowTD = vscode.window.registerTreeDataProvider(
+	const clockWindowDisp = vscode.window.registerTreeDataProvider(
 		'clocksWindow',
 		clockWindow
 	)
+    const heatCommitWindowDisp = vscode.window.registerWebviewViewProvider(
+        'heatCommitWindow',
+        heatCommitWindow
 
-    timeTracker.onUpdate(
-        clocks => clockWindow.refresh(clocks)
     )
 
-	context.subscriptions.push(clockWindowTD);
+    timeTracker.onUpdate( clocks => {
+        clockWindow.refresh(clocks)
+    })
+    commitTracker.onUpdate(async commits => {
+        
+        if (!heatCommitWindow.webview) return;
+        // const resHTML = await runPy("./visualization/commitMap.py", JSON.stringify(commits));
+        const resHTML = "<h1>Hello hello</h1>"
+        console.log(resHTML)
+        heatCommitWindow.refresh(resHTML);
+    })
+
+	context.subscriptions.push(heatCommitWindowDisp);
+	context.subscriptions.push(clockWindowDisp);
 }
 
 // This method is called when your extension is deactivated

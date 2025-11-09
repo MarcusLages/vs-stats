@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { WindowItem } from "./window.js";
 
 // export class MainWindow implements vscode.TreeDataProvider<WindowItem>
 export class ClockWindow {
@@ -39,12 +40,5 @@ export class ClockWindow {
     refresh(data) {
         this.setClocks(data)
         this._onDidChangeTreeData.fire(null)
-    }
-}
-
-export class WindowItem extends vscode.TreeItem {
-    constructor(label, description, collapsibleState) {
-        super(label, collapsibleState);
-        this.description = description;
     }
 }
