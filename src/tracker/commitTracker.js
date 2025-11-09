@@ -119,7 +119,7 @@ export class CommitTracker extends Tracker {
     }
 
     getData() {
-        const dateFormatted = `${this.currDate.getDate()}-${this.currDate.getMonth()}-${this.currDate.getFullYear()}`;
+        const dateFormatted = `${this.currDate.getFullYear()}-${this.currDate.getMonth()}-${this.currDate.getDate()}`;
         return {
             currDate: dateFormatted,
             commits: this.commits
