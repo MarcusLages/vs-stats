@@ -3,10 +3,23 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import sys
 
-def load_and_format_data(json_file='commitdata.json'):
+def load_and_format_data(json_input=None):
+    """
+    Load data from file path, JSON string, or stdin.
     
-    with open(json_file, 'r') as file:
-        data = json.load(file)
+    Args:
+        json_input: File path, JSON string, or None for stdin
+    """
+    if json_input is None:
+        # Read from stdin
+        data = json.load(sys.stdin)
+    elif json_input.strip().startswith(('{', '[')):
+        # Parse as JSON string
+        data = json.loads(json_input)
+    else:
+        # Read from file
+        with open(json_input, 'r') as file:
+            data = json.load(file)
     
     commits_array = data["commits"]
     
@@ -74,10 +87,11 @@ def plot_commit_heatmap(commits_dict):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        json_file = sys.argv[1]
+        # Use command-line argument (file path or JSON string)
+        commits_data = load_and_format_data(sys.argv[1])
     else:
-        json_file = 'data.json'
-        
-    commits_data = load_and_format_data('commitdata.json')    
+        # Read from stdin
+        commits_data = load_and_format_data()
+    
     fig = plot_commit_heatmap(commits_data)
     fig.show()

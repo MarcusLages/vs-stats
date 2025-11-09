@@ -3,10 +3,10 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import sys
 
-def load_and_format_data(json_file='data.json'):
+def load_and_format_data():
 
-    with open(json_file, 'r') as file:
-        data = json.load(file)
+    print(sys.stdin.read())
+    data = json.loads(sys.stdin.read())
     
     lines_added_array = data["linesAdded"]
     lines_deleted_array = data["linesDeleted"]
@@ -91,8 +91,7 @@ if __name__ == '__main__':
     else:
         json_file = 'data.json'  # Default file
     
-    print(f"Loading data from: {json_file}")
-    added_data, deleted_data = load_and_format_data(json_file)
+    added_data, deleted_data = load_and_format_data()
     fig = plot_lines_metrics(added_data, deleted_data)
     fig.show()
     
