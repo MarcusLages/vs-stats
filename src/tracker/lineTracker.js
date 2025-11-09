@@ -43,6 +43,8 @@ export class LineTracker extends Tracker {
                     if (!res) continue;
                     res.added += unstagedDiffRes.added;
                     res.removed += unstagedDiffRes.removed;
+
+                    this._onUpdate.fire(res);
                 } catch (err) {
                     console.error(`Diff failed - ${relPath}: `, err);
                 }
