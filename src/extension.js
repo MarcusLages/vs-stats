@@ -12,7 +12,7 @@ export function activate(context) {
 	)
 
     // Example usage
-    new LineTracker().start({update: function(m) { console.log(`+${m.added} -${m.removed}`) }})
+    new LineTracker().start({update: function(m) { console.log(m, `+${m.added} -${m.removed}`) }})
 
 	context.subscriptions.push(mainWindow);
 }
