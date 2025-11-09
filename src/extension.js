@@ -45,18 +45,18 @@ export function activate(context) {
         clockWindow.refresh(clocks);
     });
 
-    // Commit tracker updates
+    // Commit tracker updates - produce full HTML and set it into the webview
     commitTracker.onUpdate(async commits => {
         if (!heatCommitWindow.webview) return;
-        const resHTML = processCommitsHTMLString(commits);
-        heatCommitWindow.refresh(resHTML);
+        const html = processCommitsHTMLString(commits);
+        heatCommitWindow.refresh(html);
     });
 
-    // Line tracker updates
+    // Line tracker updates - produce full HTML and set it into the webview
     lineTracker.onUpdate(async lines => {
         if (!lineStatsWindow.webview) return;
-        const resHTML = processLinesHTMLString(lines);
-        lineStatsWindow.refresh(resHTML);
+        const html = processLinesHTMLString(lines);
+        lineStatsWindow.refresh(html);
     });
 
 	context.subscriptions.push(clockWindowDisp);

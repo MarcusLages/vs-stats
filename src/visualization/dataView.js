@@ -95,7 +95,7 @@ export function processLinesHTMLString(data) {
         }
         #plotlyDiv {
             width: 100%;
-            height: 400px;
+            height: 200px;
         }
         </style>
         </head>
@@ -130,14 +130,16 @@ export function processLinesHTMLString(data) {
                     yaxis: { title: 'Lines' },
                     hovermode: 'x unified',
                     template: 'plotly_white',
-                    margin: { t: 50, b: 50, l: 50, r: 20 },
+                    margin: { t: 40, b: 50, l: 50, r: 20 },
                     showlegend: true,
                     legend: {
                         yanchor: "top",
                         y: 0.99,
                         xanchor: "left",
                         x: 0.01
-                    }
+                    },
+                    // enforce reduced height so Plotly renders at the smaller size
+                    height: 200
                 };
 
                 const config = { responsive: true };

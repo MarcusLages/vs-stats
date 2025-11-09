@@ -154,12 +154,15 @@ export class LineTracker extends Tracker {
     }
 
     getData() {
-        const dateFormatted = `${this.currDate.getFullYear()}-${this.currDate.getMonth()}-${this.currDate.getDate()}`;
+        // format month as 1-based for readability (JS months are 0-based)
+        const dateFormatted = `${this.currDate.getFullYear()}-${this.currDate.getMonth() + 1}-${this.currDate.getDate()}`;
         return {
             currDate: dateFormatted,
             linesAdded: this.linesAdded,
-            linesRemoved: this.linesRemoved
-        }
+            linesRemoved: this.linesRemoved,
+            // backward-compatible alias expected by visualization
+            linesDeleted: this.linesRemoved
+        };
     }
 
 }

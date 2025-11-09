@@ -7,25 +7,28 @@ export class CommitWindow {
     resolveWebviewView(webviewView) {
         this.webview = webviewView;
         webviewView.webview.options = { enableScripts: true };
-        webviewView.webview.html = this.getHtml("");
-        console.log("webviewView" , webviewView)
+        // initial placeholder; actual HTML will be set by extension.refresh(html)
+        webviewView.webview.html = this.getHtmlPlaceholder();
+        console.log("CommitWindow webviewView", webviewView)
     }
 
     refresh(snippet) {
-        console.log("Refreshing CommitWindow with snippet:", snippet)
-        if (this.webview) {
-            this.webview.webview.html = this.getHtml(snippet);
+        if (!this.webview) return;
+        try {
+            // Accept full HTML string produced by the extension
+            this.webview.webview.html = snippet || this.getHtmlPlaceholder();
+        } catch (e) {
+            console.error('Failed to set commit webview HTML', e);
         }
     }
 
-    getHtml(snippet) {
-        return `
-            <!DOCTYPE html>
+    getHtmlPlaceholder() {
+        return `<!DOCTYPE html>
             <html>
-                <body>
-                    ${snippet}
-                </body>
-            </html>
-        `;
+            <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>body{font-family:sans-serif;padding:12px;margin:0;color:#666}</style>
+            </head>
+            <body><div>Loading commits…</div></body>
+            </html>`;
     }
 }
