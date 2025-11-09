@@ -81,7 +81,10 @@ export class CommitTracker extends Tracker {
 
     loadCurrDate() {
         const stored = this.context.workspaceState.get(CommitTracker.CURR_DATE_STG_KEY);
-        return new Date(stored) || new Date();
+        if (stored) {
+            return new Date(stored);
+        }
+        return new Date();
     }
 
     updateDate() {
