@@ -10,19 +10,32 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onStartupFinished"],
   "main": "./src/extension.js",
   "contributes": {
-    "commands": [{
-      "command": "statosaurus.helloWorld",
-      "title": "Hello World"
-    }],
+    "viewsContainers": {
+      "activitybar": [{
+          "id": "statosaurus-view",
+          "title": "Statosaurus",
+          "icon": "./resources/statosaurus.svg"
+        }]
+    },
     "views": {
-      "explorer": [
+      "statosaurus-view": [
         {
           "icon": "./resources/statosaurus.svg",
-          "id": "mainWindow",
-          "name": "Statosaurus"
+          "id": "clocksWindow",
+          "name": "Clocks"
+        },
+        {
+          "icon": "./resources/statosaurus.svg",
+          "id": "heatCommitWindow",
+          "name": "Commits"
+        },
+        {
+          "icon": "./resources/statosaurus.svg",
+          "id": "lineStatsWindow",
+          "name": "Changes"
         }
       ]
     }
