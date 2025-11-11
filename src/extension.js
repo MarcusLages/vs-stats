@@ -6,6 +6,9 @@ import { TimeTracker } from "./tracker/timeTracker.js";
 import { CommitWindow } from "./components/commit_window.js";
 import { LineWindow } from "./components/line_window.js";
 import { processCommitsHTMLString, processLinesHTMLString } from "./visualization/dataView.js";
+import { runPy } from "./utils/pipe.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // activate(context: vscode.ExtensionContext)
 export function activate(context) {
@@ -40,6 +43,12 @@ export function activate(context) {
         lineStatsWindow
     );
 
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    // const scriptPath = path.join(__dirname, "utils", "test.py");
+    // runPy(context, scriptPath, "input from Node", ["argA", "argB"])
+    //     .then(out => console.log("Result from Python:", out))
+    //     .catch(err => console.error("Error:", err));
+
     // Time tracker updates
     timeTracker.onUpdate(clocks => {
         clockWindow.refresh(clocks);
@@ -47,9 +56,16 @@ export function activate(context) {
 
     // Commit tracker updates - produce full HTML and set it into the webview
     commitTracker.onUpdate(async commits => {
-        if (!heatCommitWindow.webview) return;
-        const html = processCommitsHTMLString(commits);
-        heatCommitWindow.refresh(html);
+        // if (!heatCommitWindow.webview) return;
+        // const html = processCommitsHTMLString(commits);
+        // heatCommitWindow.refresh(html);
+        const scriptPath = path.join(__dirname, "visualization", "commitMap.py");
+        const html = runPy(context, scriptPath, JSON.stringify(commits))
+        .then(out => {
+            // console.log("Result from Python:", out);
+            heatCommitWindow.refresh(out)
+        })
+        .catch(err => console.error("Error:", err));
     });
 
     // Line tracker updates - produce full HTML and set it into the webview

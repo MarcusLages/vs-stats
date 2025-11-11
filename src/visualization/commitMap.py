@@ -46,7 +46,7 @@ def plot_commit_heatmap(commits_dict):
     all_values = [commits_dict[i] for i in range(7)]
     min_val = min(all_values) if all_values else 0
     max_val = max(all_values) if all_values else 1
-    
+
     fig = go.Figure(data=go.Heatmap(
         z=commit_values,
         x=x_labels,
@@ -76,8 +76,7 @@ def plot_commit_heatmap(commits_dict):
         xaxis=dict(side='bottom'),
         yaxis=dict(showticklabels=True),
     )
-        
-        
+
     return fig
 
 if __name__ == '__main__':
@@ -89,4 +88,5 @@ if __name__ == '__main__':
         commits_data = load_and_format_data()
     
     fig = plot_commit_heatmap(commits_data)
-    print(pio.to_html(fig))
+    html = pio.to_html(fig)
+    sys.stdout.buffer.write(html.encode('utf-8'))

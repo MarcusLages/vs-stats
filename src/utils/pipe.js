@@ -1,28 +1,33 @@
 import { spawn } from "child_process";
 import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
 export function runPy(context, scriptPath, input = "", args = []) {
     return new Promise((res, rej) => {
-        // console.log("venv", getVenvPython(context))
         const pyProc = spawn(
             getVenvPython(context), 
             [scriptPath].concat(args),
             {
                 // stdin, stdout, stderr
-                stdio: ["pipe", "pipe", "inherit"]
+                stdio: ["pipe", "pipe", "pipe"],
+                windowsHide: true
             }
         );
 
         let output = "";
+        let errOutput = "";
 
         // Register res callback
         pyProc.stdout.on("data", data => output += data.toString() );
+        pyProc.stderr.on("data", data => errOutput += data.toString() );
         pyProc.on("error", rej);
         pyProc.on("close", sign => {
             if (sign !== 0) {
+                console.error("Python stderr:", errOutput.trim());
                 rej(new Error("Python returned with error."))
             } else {
-                console.log(output.trim())
+                // console.log(output.trim())
                 res(output.trim())
             }
         })

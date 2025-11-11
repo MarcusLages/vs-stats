@@ -9,13 +9,14 @@ export class CommitWindow {
         webviewView.webview.options = { enableScripts: true };
         // initial placeholder; actual HTML will be set by extension.refresh(html)
         webviewView.webview.html = this.getHtmlPlaceholder();
-        console.log("CommitWindow webviewView", webviewView)
+        // console.log("CommitWindow webviewView", webviewView)
     }
 
     refresh(snippet) {
         if (!this.webview) return;
         try {
             // Accept full HTML string produced by the extension
+            console.log(typeof(snippet))
             this.webview.webview.html = snippet || this.getHtmlPlaceholder();
         } catch (e) {
             console.error('Failed to set commit webview HTML', e);
